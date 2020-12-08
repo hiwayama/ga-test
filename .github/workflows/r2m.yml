@@ -1,0 +1,21 @@
+name: Create Release to master pull requests
+
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  r2m:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          branch: release
+          base: master
+          title: "release to master"
