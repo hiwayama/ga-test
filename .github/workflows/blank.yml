@@ -1,0 +1,25 @@
+name: release to master
+
+on:
+  push:
+    branches: [ release ]
+
+  workflow_dispatch:
+
+jobs:
+  r2m:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: create PR
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
+
+          # existance check
+          gh pr list --base master | grep "release to master" && echo "existed r2m PR" && exit 0
+
+          gh pr create --title "release to master" --base master --head release --body ""
