@@ -1,0 +1,32 @@
+name: InputTest
+
+on:
+  workflow_dispatch:
+    name:
+      type: choice
+      description: Who to greet
+      options: 
+      - monalisa
+      - cschleiden
+    message:
+      required: true
+    use-emoji:
+      type: boolean
+      description: Include 🎉🤣 emojis
+    environment:
+      type: environment
+
+jobs:
+  r2m:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: echo
+        run: |
+          echo "name=${{ github.event.inputs.name }}"
+          echo "message=${{ github.event.inputs.message }}"
+          echo "use-emoji=${{ github.event.inputs.use-emoji }}"
